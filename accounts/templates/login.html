@@ -1,0 +1,55 @@
+<!-- accounts/templates/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body { background-color: black; color: white; font-family: sans-serif; }
+        .container {
+            max-width: 400px; margin: auto; padding: 40px;
+            background-color: #1a1a1a; border-radius: 10px;
+            box-shadow: 0 0 10px red;
+        }
+        h2 { color: red; text-align: center; }
+        input {
+            width: 100%; padding: 10px; margin: 10px 0;
+            border: 1px solid red; background-color: black; color: white;
+        }
+        button {
+            background-color: red; color: white; border: none;
+            padding: 12px; width: 100%; border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background-color: darkred; }
+        .alert-success {
+            background-color: #1a1a1a; color: white;
+            border: 2px solid red; border-radius: 8px;
+            padding: 15px; font-weight: bold;
+            box-shadow: 0 0 10px red;
+            animation: pop 0.5s ease-in-out; text-align: center;
+            margin-bottom: 20px;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.username.label_tag }} {{ form.username }}
+            {{ form.password.label_tag }} {{ form.password }}
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      background: linear-gradient(to right, #e9e1d5, #f6f4ef);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 24px;
+      width: 320px;
+      box-shadow: 0 0 18px rgba(140, 90, 50, 0.2);
+      border: 1px solid #d2b48c;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #5e3c1f;
+      font-size: 22px;
+      margin-top: 2px;
+    }
+
+    .form-container label {
+      display: block;
+      margin: 10px 0 4px;
+      color: #4a2c12;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-container input,
+    .form-container select {
+      width: 100%;
+      padding: 8px 36px 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #a1866f;
+      background: #fff;
+      color: #333;
+      font-size: 13px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .form-container i {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7d5638;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .form-container .errorlist {
+      color: red;
+      margin: 4px 0 10px;
+      padding-left: 0;
+      list-style: none;
+      font-size: 12px;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #a0522d;
+      color: #fff;
+      font-weight: bold;
+      font-size: 14px;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 10px rgba(160, 82, 45, 0.4);
+    }
+
+    .form-container button:hover {
+      background: #8b4513;
+    }
+
+    select option {
+      background-color: #fff;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container" style="margin-top: 60px; margin-bottom: 60px;">
+    <h2>Create Account</h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <div class="input-wrapper">
+          {{ field }}
+
+          {% if field.widget.input_type == "password" %}
+            <i class="fa fa-eye" onclick="togglePassword('{{ field.id_for_label }}', this)"></i>
+          {% endif %}
+        </div>
+        {{ field.errors }}
+      {% endfor %}
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <!-- Eye toggle script -->
+  <script>
+    function togglePassword(id, icon) {
+      const input = document.getElementById(id);
+      if (!input) return;
+
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      icon.classList.toggle('fa-eye');
+      icon.classList.toggle('fa-eye-slash');
+    }
+  </script>
+
+  <!-- Font Awesome for eye icon -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
